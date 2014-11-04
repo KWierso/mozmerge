@@ -133,10 +133,9 @@ then
     echo "This is an update, I can't add the 'a=merge' or 'CLOSED TREE' to bypass the commit hook."
     echo "Please open mozilla-central before pressing '1' to proceed."
     select proceed in "Proceed"; do
-#TODO ISSUE 2 - Make this actually push
       case $proceed in
-        Proceed ) break;;
-#        hg push
+        Proceed )
+          hg push ;;
       esac
     done
   fi
