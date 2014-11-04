@@ -16,8 +16,18 @@ while getopts :hs:d:cr: option
 do
   case "$option" in
   h)
-    # TODO ISSUE 4 - Do something actually helpful here...
-    echo "HELP" 
+    echo
+    echo "MozMerge:"
+    echo "usage: ./merge.sh -d [branch name] -s [branch name] -r [revision] -c"
+    echo
+    echo "Options:"
+    echo "  -d     This is the repository you will be pushing incoming changes TO"
+    echo "  -s     This is the repository you will be fetching incoming changes FROM"
+    echo "  -r     This is the specific revision you want to pull from -s"
+    echo "             [optional, will pull tip otherwise]"
+    echo "  -c     This flag indicates that -d is closed, so the CLOSED TREE hook is in effect"
+    echo "             [optional, assumes tree is open if omitted]"
+    echo
     exit
     ;;
   c)
