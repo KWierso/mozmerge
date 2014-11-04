@@ -6,7 +6,7 @@
 # 'hg merge' to include the new changes, then pushes it out to the remote repository.
 #------------------------------------------------------------------------------------#
 
-#TODO - Should we just poll treestatus instead of manually flagging closed?
+#TODO ISSUE 3 - Should we just poll treestatus instead of manually flagging closed?
 # Default to assuming the tree is not closed
 closed="false"
 rev=""
@@ -16,7 +16,7 @@ while getopts :hs:d:cr: option
 do
   case "$option" in
   h)
-    # TODO - Do something actually helpful here...
+    # TODO ISSUE 4 - Do something actually helpful here...
     echo "HELP" 
     exit
     ;;
@@ -105,7 +105,7 @@ then
   destination="fx-team"
 fi
 
-# This assume all local repos are cloned into ~/mozilla/ but I don't know what else to do here.
+# TODO ISSUE 5 - This assume all local repos are cloned into ~/mozilla/ but I don't know what else to do here.
 cd ~/mozilla/$source
 
 # Make sure the local repo mirrors the remote repo before pulling in for the merge.
@@ -120,7 +120,7 @@ else
 fi
 
 
-# TODO - $COUNT = 1 if there were no changes, also
+# TODO ISSUE 6 - $COUNT = 1 if there were no changes, also
 # Count the number of heads. If only one head, this is an update not a merge.
 COUNT=`hg heads -q | wc -l`
 if [ "$COUNT" -eq 1 ]
@@ -133,13 +133,15 @@ then
     echo "This is an update, I can't add the 'a=merge' or 'CLOSED TREE' to bypass the commit hook."
     echo "Please open mozilla-central before pressing '1' to proceed."
     select proceed in "Proceed"; do
+#TODO ISSUE 2 - Make this actually push
       case $proceed in
         Proceed ) break;;
-        hg push
+#        hg push
       esac
     done
   fi
 else
+# TODO ISSUE 1 - This doesn't handle merge conflicts at all
   if [ $closed = "true" ]
   then
     hg merge && hg commit -m "Merge $destination to $source a=merge CLOSED TREE"
@@ -149,7 +151,7 @@ else
   hg push
 fi
 
-# TODO - Remove this when you're confident enough to actually push the merges
+# TODO ISSUE 7 - Remove this when you're confident enough to actually push the merges
 #hg strip --no-backup "roots(outgoing())" && hg checkout default
 
 
